@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Лаба 16</title>
+  </head>
+  <body>
+    <p id="result"></p>
+    <button onclick="next()">наступне завдання</button><br /><br>
+    <span id="question">1 x 1 =</span>
+    <input id="i1" type="number" /> <button onclick="calc()">перевiрити</button>
+    <p id="answer"></p>
+    <script>
+      function calc() {
+        let userAnsw = parseInt(document.getElementById("i1").value);
+        if (userAnsw === questions[curQuestion].right) {
+          document.getElementById("answer").innerHTML = "Правильна вiдповiдь";
+        } else {
+          document.getElementById(
+            "answer"
+          ).innerHTML = `Помилка, правильна вiдповiдь "${questions[curQuestion].right}"`;
+        }
+      }
+
+      function next() {
+        if (curQuestion + 1 >= questions.length) {
+          return;
+        }
+
+        if (result.all !== -1) {
+          //Check if answer is right
+          let userAnsw = parseInt(document.getElementById("i1").value);
+          if (userAnsw === questions[curQuestion].right) {
+            result.right++;
+          }
+          result.all++;
+
+          //Update result text
+          document.getElementById("result").innerHTML = `Загальний рахунок ${
+            (result.right / result.all) * 100
+          }% (${result.right} правильних вiдповiдей з ${result.all})`;
+        } else {
+          result.all++;
+        }
+
+        curQuestion++;
+
+        document.getElementById("question").innerHTML =
+          questions[curQuestion].question;
+      }
+
+      let result = {
+        right: 0,
+        all: -1,
+      };
+
+      let questions = [
+        { right: 1, question: "1 x 1 =" },
+        { right: 24, question: "4 x 6 =" },
+        { right: 56, question: "7 x 8 =" },
+      ];
+      let curQuestion = -1;
+
+      next();
+    </script>
+  </body>
+</html>

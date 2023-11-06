@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Лаба 16</title>
+  </head>
+  <body>
+    <p id="result"></p><br>
+    <button onclick="next()">наступне завдання</button><br>
+    <p id="question">1 x 1 =</p>
+    <input id="i1" type="radio" value="1" name="1"><label for="i1">1</label><br>
+    <input id="i2" type="radio" value="2" name="1"><label for="i2">2</label><br>
+    <input id="i3" type="radio" value="3" name="1"><label for="i3">0</label><br>
+    <input id="i3" type="radio" value="4" name="1"><label for="i3">4</label><br>
+    <p id="answer"></p>
+    <script>
+        function calc() {
+          for (let i = 0; i < inputs.length; i++) {
+            if(inputs[i].checked){
+              if(i === questions[curQuestion].right){
+                document.getElementById('answer').innerHTML = 'Правильна вiдповiдь';
+              }else{
+                let right = questions[curQuestion].variants[questions[curQuestion].right];
+                document.getElementById('answer').innerHTML = `Помилка, правильна вiдповiдь "${right}"`;
+              }
+            }
+          }
+
+        }
+
+        function next() {
+          if(curQuestion+1 >= questions.length){
+            return;
+          }
+
+          if(result.all !== -1){
+          //Check if answer is right
+          for (let i = 0; i < inputs.length; i++) {
+            if(inputs[i].checked){
+              if(i === questions[curQuestion].right){
+                result.right++;
+              }
+            }
+          }
+          result.all++;
+
+          //Update result text
+            document.getElementById('result').innerHTML = `Загальний рахунок ${result.right/result.all*100}% (${result.right} правильних вiдповiдей з ${result.all})`;
+          }else{
+            result.all++;
+          }
+
+          curQuestion++;
+          
+          //Update variants and question
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].checked = false;
+            labels[i].innerHTML = questions[curQuestion].variants[i];
+          }
+          document.getElementById('question').innerHTML = questions[curQuestion].question;
+        }
+  
+        let inputs = document.querySelectorAll('input');
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].addEventListener('change', calc);
+        }
+        let labels = document.querySelectorAll('label');
+
+        let result = {
+          right:0,
+          all:-1
+        }
+
+        let questions = [
+          {variants: [1, 2, 0, 4], right:0, question:"1 x 1 ="},
+          {variants: [6, 4, 24, 20], right:2, question:"4 x 6 ="},
+          {variants: [64, 56, 52, 62], right:1, question:"7 x 8 ="},
+        ]
+        let curQuestion = -1;
+
+        next()
+    </script>
+  </body>
+</html>

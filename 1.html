@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Лаба 16</title>
+  </head>
+  <body>
+    <input id="i1" type="checkbox" value="ua" name="i1"><label for="i1">Ukrainian</label><br><br>
+    <input id="i2" type="checkbox" value="en" name="i2"><label for="i2">English</label><br><br>
+    <input id="i3" type="checkbox" value="sp" name="i3"><label for="i3">Spanish</label><br><br>
+    <button onclick="run()">Ok</button><br><br>
+    <p id="result"></p>
+    <script>
+        function run() {
+          let inputs = document.querySelectorAll('input');
+          let str = "";
+          for (let i = 0; i < inputs.length; i++) {
+            if(inputs[i].checked){
+              str += inputs[i].value + " "
+            }
+          }
+
+          document.getElementById('result').innerHTML = str;
+        }
+  
+       
+    </script>
+  </body>
+</html>
